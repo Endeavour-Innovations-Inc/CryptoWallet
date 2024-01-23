@@ -1,15 +1,15 @@
-package main
+// wallet.go
+package wallet
 
 import (
     "crypto/ecdsa"
     "encoding/hex"
-    "fmt"
     "log"
 
     "github.com/ethereum/go-ethereum/crypto"
 )
 
-func generateKeyPair() {
+func GenerateKeyPair() (string, string) {
     privateKey, err := crypto.GenerateKey()
     if err != nil {
         log.Fatalf("Failed to generate private key: %v", err)
@@ -22,14 +22,9 @@ func generateKeyPair() {
     }
 
     privateKeyBytes := crypto.FromECDSA(privateKey)
-    fmt.Println("Private Key:", hex.EncodeToString(privateKeyBytes))
-
     publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
-    fmt.Println("Public Key:", hex.EncodeToString(publicKeyBytes))
-}
 
-func main() {
-    generateKeyPair()
+    return hex.EncodeToString(privateKeyBytes), hex.EncodeToString(publicKeyBytes)
 }
 
 // go run wallet.go
